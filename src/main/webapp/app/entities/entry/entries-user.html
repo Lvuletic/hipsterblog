@@ -1,0 +1,37 @@
+<div ng-cloak>
+    <div class="row">
+        <div class="col-md-8">
+            <h1>List of your posts</h1>
+
+            <div>
+		       	<div ng-repeat="entry in vm.entries track by entry.id">
+		       		<h2><a ui-sref="entry-view({id:entry.id})">{{entry.title}}</a></h2>
+		       		<small>Posted on {{entry.date | date: 'short'}} by {{entry.blog.user.login}}</small>
+		       		<div ng-bind-html="entry.content"></div>	    
+		       	</div>
+    		</div>
+         
+         <button class="btn btn-primary" ui-sref="entry-user.new" >
+             <span class="glyphicon glyphicon-plus"></span>
+             <span >
+                 Create new Entry
+             </span>
+         </button>
+        </div>
+        <div class="col-md-4">
+        	<div ng-switch="vm.isAuthenticated()">
+                <div class="alert alert-success" ng-switch-when="true">
+                    You are logged in as user "{{vm.account.login}}".
+                </div>
+
+                <div class="alert alert-warning" ng-switch-when="false">
+                    If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
+                </div>
+
+                <div class="alert alert-warning" ng-switch-when="false">
+                    You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

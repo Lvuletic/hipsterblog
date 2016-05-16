@@ -1,0 +1,38 @@
+<div ng-cloak>
+    <div class="row">
+        <div class="col-md-8">
+            <h1>List of newest entries <span ng-show="vm.currentTag"> - {{vm.currentTag}}</span></h1>
+
+            <div infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+		       	<div ng-repeat="entry in vm.entries track by entry.id">
+		       		<h2><a ui-sref="entry-view({id:entry.id})">{{entry.title}}</a></h2>
+		       		<small>Posted on {{entry.date | date: 'short'}} by {{entry.blog.user.login}}</small>
+		       		<div ng-bind-html="entry.content"></div>	    
+		       	</div>
+    		</div>
+         
+        </div>
+        <div class="col-md-4">
+        	<div ng-switch="vm.isAuthenticated()">
+                <div class="alert alert-success" ng-switch-when="true">
+                    You are logged in as user "{{vm.account.login}}".
+                </div>
+
+                <div class="alert alert-warning" ng-switch-when="false">
+                    If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
+                </div>
+
+                <div class="alert alert-warning" ng-switch-when="false">
+                    You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
+                </div>
+            </div>
+            <div>
+            	<h3>Search by tag</h3>
+            	<button type="button" class="btn btn-default btn-sm" ng-click="vm.reset()">All</button>
+            	<span ng-repeat="tag in vm.tags">
+            		<button class="btn btn-default btn-sm" type="button" ng-click="vm.loadByTag(tag.id, tag.name)">{{tag.name}}</button>
+            	</span>
+            </div>
+        </div>
+    </div>
+</div>

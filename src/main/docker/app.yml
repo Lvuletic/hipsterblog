@@ -1,0 +1,15 @@
+version: '2'
+services:
+    hipsterblog-app:
+        image: hipsterblog
+        external_links:
+            - hipsterblog-mysql:mysql
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/hipsterblog?useUnicode=true&characterEncoding=utf8&useSSL=false
+        ports:
+            - 8080:8080
+    hipsterblog-mysql:
+        extends:
+            file: mysql.yml
+            service: hipsterblog-mysql
